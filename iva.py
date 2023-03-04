@@ -156,9 +156,9 @@ if __name__ == "__main__":
 
     logging.info("")
 
-    logging.info(f"Total gastos 10%: {total_gastos_0} Gs")
+    logging.info(f"Total gastos 10%: {total_gastos_10} Gs")
     logging.info(f"Total gastos 5%: {total_gastos_5} Gs")
-    logging.info(f"Total gastos 0%: {total_gastos_10} Gs")
+    logging.info(f"Total gastos 0%: {total_gastos_0} Gs")
 
     logging.info("")
 
