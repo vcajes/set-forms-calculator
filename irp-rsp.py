@@ -261,8 +261,8 @@ if __name__ == "__main__":
     total_gastos_activ_gravada = total_egresos_activ_gravada + total_compras_activ_gravada
 
     total_gastos = total_compras + total_egresos
-    total_gastos_familiares = total_gastos - total_gastos_activ_gravada - total_gastos_salud_educ - total_gastos_estado_asoc
-    total_gastos_by_type = total_gastos_salud_educ + total_gastos_vehiculo_cada_3y + total_gastos_estado_asoc + total_gastos_activ_gravada + total_gastos_familiares
+    total_gastos_familiares = total_gastos - total_gastos_activ_gravada - total_gastos_salud_educ - total_gastos_estado_asoc - total_gastos_vehiculo_cada_3y
+    total_gastos_by_type = total_gastos_salud_educ + total_gastos_estado_asoc + total_gastos_activ_gravada + total_gastos_familiares + total_gastos_vehiculo_cada_3y
 
     logging.info(f"Total gastos en actividad gravada: {total_gastos_activ_gravada:,} Gs")
     logging.info(f"Total gastos familiares: {total_gastos_familiares:,} Gs")
