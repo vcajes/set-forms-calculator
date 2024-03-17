@@ -101,6 +101,10 @@ def clean_egresos(egresos):
     # ensure restrictions are met
     assert np.where((egresos[COL_TIPO_COMPROBANTE] == TIPO_COMPROBANTE_EGRESO_CREDITO))[0].size == 0
 
+    # fix when there is no egresos
+    if COL_RUC_EGRESOS not in egresos:
+        egresos[COL_RUC_EGRESOS] = "0"
+
     # keep only columns we need
     egresos = egresos[[COL_TIPO_REGISTRO, COL_RUC_EGRESOS, COL_TIPO_COMPROBANTE, COL_TOTAL_COMPROBANTE]]
 
