@@ -18,6 +18,7 @@ COL_MONTO_0 = "Monto No Gravado / Exento "
 COL_TOTAL_COMPROBANTE = "Total Comprobante"
 COL_TIPO_COMPROBANTE = "Tipo de Comprobante"
 COL_RUC = "RUC / N? de Identificacion del Informado"
+COL_RUC2 = "RUC del Informante"
 COL_RUC_EGRESOS = "RUC / N° de Identificación del Informado"
 COL_TIPO_TODOS = ["VENTAS", "COMPRAS", "INGRESOS", "EGRESOS"]
 TIPO_COMPROBANTE_EXTRACTO_TC = "EXTRACTO DE CUENTA TC/TD"
@@ -61,7 +62,12 @@ def load_data(path):
 
 def clean_compras(compras):
     # keep only columns we need
-    compras = compras[[COL_TIPO_REGISTRO, COL_IMPUTA_IRP, COL_RUC, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
+    try:
+        compras = compras[[COL_TIPO_REGISTRO, COL_IMPUTA_IRP, COL_RUC, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
+        compras[COL_RUC] = compras[COL_RUC].astype(str).apply(lambda x: x.replace(".0", ""))
+    except KeyError:
+        compras = compras[[COL_TIPO_REGISTRO, COL_IMPUTA_IRP, COL_RUC2, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
+        compras[COL_RUC2] = compras[COL_RUC2].astype(str).apply(lambda x: x.replace(".0", ""))
 
     # ensure that the rows are either for IRP deduction or not
     if {COL_IMPUTA_IRP, COL_NO_IMPUTAR}.issubset(compras.columns):
@@ -70,8 +76,6 @@ def clean_compras(compras):
 
     # remove rows that will not be deducted for IRP
     compras = compras[~compras[COL_IMPUTA_IRP].astype(str).isin(["NO"])]
-
-    compras[COL_RUC] = compras[COL_RUC].astype(str).apply(lambda x: x.replace(".0", ""))
 
     # convert amounts to int
     compras[COL_MONTO_10] = compras[COL_MONTO_10].fillna(0).astype(int)
@@ -83,9 +87,12 @@ def clean_compras(compras):
 
 def clean_ventas(ventas):
     # keep only columns we need
-    ventas = ventas[[COL_TIPO_REGISTRO, COL_RUC, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
-
-    ventas[COL_RUC] = ventas[COL_RUC].astype(str).apply(lambda x: x.replace(".0", ""))
+    try:
+        ventas = ventas[[COL_TIPO_REGISTRO, COL_RUC, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
+        ventas[COL_RUC] = ventas[COL_RUC].astype(str).apply(lambda x: x.replace(".0", ""))
+    except KeyError:
+        ventas = ventas[[COL_TIPO_REGISTRO, COL_RUC2, COL_MONTO_10, COL_MONTO_5, COL_MONTO_0]]
+        ventas[COL_RUC2] = ventas[COL_RUC2].astype(str).apply(lambda x: x.replace(".0", ""))
 
     # convert amounts to int
     ventas[COL_MONTO_10] = ventas[COL_MONTO_10].fillna(0).astype(int)
