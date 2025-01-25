@@ -15,7 +15,7 @@ COL_TIPO_REGISTRO = "Tipo de Registro"
 COL_TIMBRADO = "Timbrado del Comprobante"
 COL_TOTAL_COMPROBANTE = "Total Comprobante"
 COL_NUMERO_COMPROBANTE = "Numero de Comprobante"
-COL_RUC = "RUC / N? de Identificacion del Informado"
+COL_RUC = "RUC / Nº de Identificacion del Informado"
 COL_RUC_EGRESOS = "RUC / N° de Identificación del Informado"
 COL_CONDICION_OPERACION = "Condicion de la Operacion"
 COL_TIPO_TODOS = ["VENTAS", "COMPRAS", "INGRESOS", "EGRESOS"]
@@ -45,6 +45,7 @@ RUCS_EGRESOS_ACTIV_GRAVADA = [
     "80001513",  # NUEVA AMERICANA SA
     "349840",    # JUAN ORLANDO PEREIRA MENDEZ
     "80082790",  # VIGOR SA
+    "1238373",   # BERTA
     "80003064",  # WASHINGTON SRL
     "2956920",   # GUSTAVO DANIEL CACERES KALLSEN
     "80004379",  # HERIMARC SRL
