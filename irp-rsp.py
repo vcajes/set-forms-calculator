@@ -18,6 +18,7 @@ COL_NUMERO_COMPROBANTE = "Numero de Comprobante"
 COL_RUC = "RUC / Nº de Identificacion del Informado"
 COL_RUC_EGRESOS = "RUC / N° de Identificación del Informado"
 COL_CONDICION_OPERACION = "Condicion de la Operacion"
+COL_TIPO_COMPROBANTE = "Tipo de Comprobante"
 COL_TIPO_TODOS = ["VENTAS", "COMPRAS", "INGRESOS", "EGRESOS"]
 
 RUCS_EGRESOS_ACTIV_GRAVADA = [
@@ -165,6 +166,9 @@ def clean_ventas(ventas):
     # remove rows that will not be deducted for IRP
     ventas = ventas[~ventas[COL_IMPUTA_IRP].astype(str).isin(["NO"])]
 
+    # skip types that are unrelated to professional services
+    ventas = ventas[~ventas[COL_TIPO_COMPROBANTE].astype(str).isin(["NOTA DE CRÉDITO"])]
+
     # ensure restrictions are met
     assert np.where((ventas[COL_CONDICION_OPERACION] == "CREDITO"))[0].size == 0
     assert np.where((ventas[COL_CONDICION_OPERACION] == "Crédito"))[0].size == 0
@@ -233,6 +237,7 @@ if __name__ == "__main__":
     total_egresos = egresos[COL_TOTAL_COMPROBANTE].astype(int).sum()
     total_diff = total_ventas - total_compras - total_egresos
 
+    logging.info(f"Total ventas prestacion servicios profesionales: {total_ventas:,} Gs")
     logging.info("")
 
     total_gastos_salud_educ = np.int64(GASTOS_EXTERIOR_SALUD_EDUCACION)
